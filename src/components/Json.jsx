@@ -5,7 +5,8 @@ class Json extends React.Component {
     name: "",
     street: "",
     city: "",
-    zipcode: ""
+    zipcode: "",
+    isView: true
   };
   getName(name) {
     this.setState({ name });
@@ -31,18 +32,25 @@ class Json extends React.Component {
     this.getFetch(3).then(data => {
       this.getName(data.name);
       this.getGeo(data.address);
+      this.setState({isView:!this.state.isView})
     });
   }
   render() {
-    const { name, street, city, zipcode } = this.state;
+    const { name, street, city, zipcode, isView } = this.state;
     return (
       <div>
-        <h2>{name}</h2>
-        <span>Улица: {street}</span>
-        <br />
-        Город: {city}
-        <br />
-        <span> Индекс: {zipcode}</span>
+        {isView ? (
+          <p>Загружаю....</p>
+        ) : (
+          <div>
+            <h2>{name}</h2>
+            <span>Улица: {street}</span>
+            <br />
+            Город: {city}
+            <br />
+            <span> Индекс: {zipcode}</span>
+          </div>
+        )}
       </div>
     );
   }
